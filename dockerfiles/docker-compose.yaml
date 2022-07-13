@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.flask
+    ports:
+      - 5000:5000
+    volumes:
+      - ../backend/:/app
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.react
+    volumes:
+      - ../frontend/node/:/usr/src/app:cached
+    command: sh -c 'cd ../frontend/flask_front && npm start'
+    ports:
+      - '8080:8080'
