@@ -1,23 +1,23 @@
-import { AppBar, Toolbar, Typography, makeStyles } from '@material-ui/core'
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import { AppBar, Toolbar, Typography, Box } from '@mui/material'
+import HelpOutline from '@mui/icons-material/HelpOutline';
 import React, {useState} from 'react';
 import Form from './Form';
 
-const useStyles = makeStyles(() => ({
-  typographyStyles: {
-    flex: 1
-  }
-}));
-  
+type FormPropsType = {
+  query: string;
+  setQuery: React.Dispatch<React.SetStateAction<string>>;
+  getResults: (e: React.FormEvent<HTMLFormElement>) => void;
+};
+
 const Header = () => {
-  const classes = useStyles()
   return (
     <AppBar position='static'>
       <Toolbar>
-        <Typography className={classes.typographyStyles}>
+        <Typography>
           Neko-chan
         </Typography>
-        <HelpOutlineIcon/>
+        <Form />
+        <HelpOutline/>
       </Toolbar>
     </AppBar>
   )

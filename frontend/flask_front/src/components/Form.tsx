@@ -1,67 +1,61 @@
-import { TextField, FormControl, InputAdornment, makeStyles, createStyles, Theme, Paper, InputBase } from '@material-ui/core'
-import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@mui/material/InputBase'
+import SearchIcon from '@mui/icons-material/Search';
+import { styled, alpha, useTheme } from '@mui/material/styles'
 import React from "react";
 
 type FormPropsType = {
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
   getResults: (e: React.FormEvent<HTMLFormElement>) => void;
-}
+};
 
+const theme = useTheme();
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-  root: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    alignItems: 'center',
-      justifyContent: 'center',
-    },
-  
-    iconButton: {
-      paddinf:10,
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  
-    input: {
-      marginLeft: theme.spacing(1),
-      flex:1,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    width: 'auto',
   },
 }));
 
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+}));
 
 const Form = ({query, setQuery, getResults}:FormPropsType) => {
-  const classes = useStyles()
+  // const classes = useStyles();
   return (
-    <>
-      {/* <Container>
-      <FormControl>
-        <InputLabel shrink>Number</InputLabel>
-      <Select>
-          <MenuItem value='receipt'>受付番号</MenuItem>
-          <MenuItem value='faq'>FAQ番号</MenuItem>
-          <MenuItem value='manegement'>管理番号</MenuItem>
-        </Select>
-      <TextField id='outlined' />
-      </FormControl>
-      </Container> */}
-
-      <Paper component='form' className={classes.root}>
-        <SearchIcon />
-        <InputBase className={classes.input} placeholder='Search' >
-        
-        </InputBase>
-
-      </Paper>
-    
-      <FormControl className={classes.formPosition} onSubmit={getResults}>
-        <TextField
-          id='outlined-search' name='query' label='Search Field' type='search' variant='outlined' 
-          InputProps={{ startAdornment: (<InputAdornment position='start'><SearchIcon /></InputAdornment>) }}
-          onChange={e => setQuery(e.target.value)} 
-          onKeyPress={e => { if (e.key === 'Enter') { getResults(e) } }} value={query}   
-        />
-    </FormControl >
-    </>
+    <Search>
+      <SearchIconWrapper>
+        <SearchIcon/>
+      </SearchIconWrapper>
+      <StyledInputBase placeholder='Search...' inputProps={{'aria-label':'search'}}/>
+    </Search>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Paper from '@material-ui/core/Paper'
+import Paper from '@mui/material/Paper'
 import { Grid, Table, TableHeaderRow } from '@devexpress/dx-react-grid-material-ui'
 
 const Results = () => {
